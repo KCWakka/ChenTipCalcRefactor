@@ -1,6 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
-public class TipCal {
+public class TipCalculatorRunner {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in); // to take input
         ArrayList<String> totalItemName = new ArrayList<>(); //making a list for the extra credit
@@ -15,6 +15,7 @@ public class TipCal {
         System.out.print("What's the tip percentage? (0-100): ");
         int tipPercent = scan.nextInt();
         scan.nextLine();
+        TipCalculator Calc = new TipCalculator(peopleNum,tipPercent);
         // line 10 to line 17 is to input user's input into variable for calculation later
         double itemCost = 0;
         double totalItemCost = itemCost;
