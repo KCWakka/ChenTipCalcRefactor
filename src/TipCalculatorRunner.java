@@ -18,7 +18,7 @@ public class TipCalculatorRunner {
         TipCalculator Calc = new TipCalculator(peopleNum,tipPercent);
         // line 10 to line 17 is to input user's input into variable for calculation later
         double itemCost = 0;
-        double totalItemCost = itemCost;
+        double totalItemCost;
 
         while (itemCost * 1 >= 0) {
             System.out.print("Enter a cost in dollars and cents, e.g. 12.50 (put -1 to end): ");
@@ -26,13 +26,13 @@ public class TipCalculatorRunner {
             scan.nextLine();
             // this is to take item cost input
             if (itemCost != -1) { // to see if they want to end it
-                totalItemCost += itemCost;
+                Calc.addMeal(itemCost);
                 System.out.print("Enter the Item: ");
                 totalItemName.add(scan.nextLine());
                 // line 27 to line 30 is to add money to an variable and add item name
             } else {
-                totalItemCost += itemCost;
-                totalItemCost++;
+                Calc.addMeal(itemCost);
+                Calc.addMeal(1);
                 //line 33 to 34 is to make sure when they end it, the -1 won't interfere in the calculation
                 // the ++ neutralize although i could just left else empty
             }
@@ -40,18 +40,20 @@ public class TipCalculatorRunner {
         }
 
         System.out.println("--------------------");
+        totalItemCost = Calc.getTotalBillBeforeTip();
         System.out.println("Total bill before tip: $" + totalItemCost);
+        tipPercent = Calc.getTipPercentage();
         System.out.println("Total Percentage: " + tipPercent + "%");
         System.out.println("Income per day: $" + incomeNum);
-        double tipCost = Math.round ( (totalItemCost * (tipPercent / 100.0)) * 100 ) / 100.0;
+        double tipCost = Calc.tipAmount();
         // line 44- doing math and input it into a variable as i am going to use that many time
         System.out.println("Total tip: $" + tipCost);
-        double totalCost = tipCost + totalItemCost;
+        double totalCost = Calc.totalBill();
         //line 47, same reason as 44
-        System.out.println("Total bill with tip: $" + (Math.round (totalCost * 100.0) / 100.0));
-        System.out.println("Per person cost before the tip: $" + Math.round (totalItemCost / peopleNum * 100) / 100.0);
-        System.out.println("Tip per person : $" + Math.round (tipCost / peopleNum * 100) / 100.0); // rounding
-        System.out.println("Total cost per person: $" + Math.round (totalCost / peopleNum * 100) / 100.0); //rounding
+        System.out.println("Total bill with tip: $" + Calc.totalBill());
+        System.out.println("Per person cost before the tip: $" + Calc.perPersonCostBeforeTip());
+        System.out.println("Tip per person : $" + Calc.perPersonTipAmount()); // rounding
+        System.out.println("Total cost per person: $" + Calc.perPersonTotalCost()); //rounding
         System.out.println("You can get a meal like this approximately every " + Math.round (totalCost / incomeNum + 0.5) + " days or day!");
         // line 53 is to tell how many days it take for the meal
         System.out.println("--------------------");
